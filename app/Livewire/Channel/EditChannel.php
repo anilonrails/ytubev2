@@ -51,12 +51,6 @@ class EditChannel extends Component
        if ($this->image)
        {
            $image = $this->image->storeAs('images', $this->channel->uuid.'.png');
-           $imageToIntervention = explode('/', $image)[1];
-            // resize image
-           $img = Image::make(storage_path().'/app/'.$image)
-               ->encode('png')
-               ->fit(600,600, fn($constraint)=>$constraint->upsize());
-
 
            $this->channel->update([
                'name'=>$this->name,

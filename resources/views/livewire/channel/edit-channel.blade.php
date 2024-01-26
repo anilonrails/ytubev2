@@ -1,4 +1,7 @@
 <div>
+    @if($channel->image)
+        <img style="max-height: 150px;" src="{{asset($channel->image)}}" alt="">
+    @endif
     <form wire:submit.prevent="update" enctype="multipart/form-data">
         @if(session()->has('message'))
             <div class="alert alert-success" role="alert">
@@ -28,11 +31,8 @@
         </div>
         <div class="form-group mt-3">
             @if(is_string($image))
-                <img
-                    src="{{ \Illuminate\Support\Facades\Storage::url($image) }}"
-                    class='w-24 h-24 rounded-full'
-                    alt=''>
-            @else
+
+            @elseif($image)
                 <img
                     src="{{ $image->temporaryUrl() }}"
                     class='' style="max-height:100px "
