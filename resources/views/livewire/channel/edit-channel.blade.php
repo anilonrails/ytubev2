@@ -27,8 +27,21 @@
             @enderror
         </div>
         <div class="form-group mt-3">
-            <input type="file" class="form-control" wire:model.live="image" />
+            @if(is_string($image))
+                <img
+                    src="{{ \Illuminate\Support\Facades\Storage::url($image) }}"
+                    class='w-24 h-24 rounded-full'
+                    alt=''>
+            @else
+                <img
+                    src="{{ $image->temporaryUrl() }}"
+                    class='' style="max-height:100px "
+                    alt=''>
+            @endif
+            <input type="file" class="form-control" wire:model.live.delay="image" />
+            <div wire:loading wire:target="photo">Uploading...</div>
             @error('image')
+
             <div class="text-danger mt-2">{{$message}}</div>
             @enderror
         </div>
