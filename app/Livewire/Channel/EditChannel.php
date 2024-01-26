@@ -3,6 +3,7 @@
 namespace App\Livewire\Channel;
 
 use App\Models\Channel;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,6 +12,8 @@ class EditChannel extends Component
 {
 
     use WithFileUploads;
+
+    use AuthorizesRequests;
 
     public $name;
     public $description;
@@ -40,6 +43,8 @@ class EditChannel extends Component
 
     public function update()
     {
+        $this->authorize('edit', $this->channel);
+
        $validated = $this->validate();
        $this->channel->update($validated);
        session()->flash('message','Channel Updated');
