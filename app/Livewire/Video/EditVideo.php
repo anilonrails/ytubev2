@@ -13,6 +13,12 @@ class EditVideo extends Component
 {
     public Video $video;
     public Channel $channel;
+
+    public function mount(Channel $channel, Video $video)
+    {
+        $this->channel = $channel;
+        $this->video = $video;
+    }
     public function render()
     {
         return view('livewire.video.edit-video');
