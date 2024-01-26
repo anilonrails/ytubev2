@@ -25,7 +25,11 @@ Route::middleware('auth')->group(function (){
    Route::get('/channel/{channel}/edit', [\App\Http\Controllers\ChannelController::class, 'edit'])->name('channel.edit');
 });
 
-
+Route::middleware('auth')->group(function (){
+    Route::get('/videos/{channel}/create', \App\Livewire\Video\CreateVideo::class)->name('video.create');
+    Route::get('/videos/{channel}/{video}/edit', \App\Livewire\Video\EditVideo::class)->name('video.edit');
+    Route::get('/videos/{channel}', \App\Livewire\Video\AllVideos::class)->name('videos');
+});
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
