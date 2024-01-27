@@ -4,10 +4,14 @@ namespace App\Livewire\Channel;
 
 use App\Models\Channel;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
 use Image;
+
+#[Layout('components.app-component')]
 class EditChannel extends Component
 {
 
@@ -42,7 +46,7 @@ class EditChannel extends Component
         ];
     }
 
-    public function update(): void
+    public function update(): Redirector
     {
         $this->authorize('edit', $this->channel);
 
@@ -51,12 +55,14 @@ class EditChannel extends Component
        if ($this->image)
        {
            $image = $this->image->storeAs('images', $this->channel->uuid.'.png');
+           $imageImage = explode('/', $image)[1];
+
 
            $this->channel->update([
                'name'=>$this->name,
                'slug'=>$this->slug,
                'description'=>$this->description,
-               'image'=>$image
+               'image'=>$imageImage
            ]);
        }else{
            $this->channel->update([
@@ -66,7 +72,9 @@ class EditChannel extends Component
            ]);
        }
 
+
        session()->flash('message','Channel Updated');
+        return redirect()->route('channel.edit',['channel'=>$this->channel]);
     }
     public function render()
     {

@@ -9,7 +9,7 @@ use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-#[Layout('layouts.app')]
+#[Layout('components.app-component')]
 class CreateVideo extends Component
 {
 
